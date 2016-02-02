@@ -33,5 +33,8 @@ while True:
     if msg:
         sendScratchCommand('broadcast "' + msg + '"')
     else:
+        print("closing socket...")
+        scratchSock.close()
+        print("done")
         sys.exit()
 
