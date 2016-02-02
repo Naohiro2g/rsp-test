@@ -1,11 +1,9 @@
 #Test code for Scratch Remote Sensors Protocol
 
-To broadcast typed in messages to Scratch.
+To broadcast the typed in message to Scratch.
 
  - Scratch cat can receive it with "When I receive 'message'".
-
  - Just click OK without message to terminate the script.
-
 
 
 Remote Sensors Protocol
