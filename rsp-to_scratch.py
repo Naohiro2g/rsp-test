@@ -9,10 +9,8 @@ root = Tk()
 root.withdraw()
 
 PORT = 42001
-HOST = 'localhost'
-#HOST = askstring('Scratch Connector', 'IP:')
-if not HOST:
-    sys.exit()
+HOST = askstring('Scratch Connector', 'IP:')
+if not HOST: HOST = 'localhost'
 
 print("connecting...")
 scratchSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -30,11 +28,10 @@ def sendScratchCommand(cmd):
 
 while True:
     msg = askstring('Scratch Connector', 'Send Broadcast:')
-    if msg:
-        sendScratchCommand('broadcast "' + msg + '"')
-    else:
-        print("closing socket...")
-        scratchSock.close()
-        print("done")
-        sys.exit()
+    if not msg: break
+    sendScratchCommand('broadcast "' + msg + '"')
 
+print("closing socket...")
+scratchSock.close()
+print("done")
+sys.exit()
