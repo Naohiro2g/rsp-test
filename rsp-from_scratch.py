@@ -3,10 +3,8 @@ from array import array
 import socket
 import time
 
-
 HOST = 'localhost'
 PORT = 42001
-
 
 print("connecting...")
 scratchSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
