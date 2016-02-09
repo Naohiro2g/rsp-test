@@ -1,4 +1,4 @@
-# Receives and prints data sent by Scratch; use control-C to quit
+# Receives and prints data sent by Scratch at local; use control-C to quit
 from array import array
 import socket
 import time
@@ -12,7 +12,7 @@ scratchSock.connect((HOST, PORT))
 print("connected! waiting for data...")
 
 
-# print incoming data forever
+# print incoming data forever, ctrl-c to break and quit
 
 while True:
 	time.sleep(0.01)

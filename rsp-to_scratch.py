@@ -1,3 +1,5 @@
+# Sends data to Scratch;
+# default host is localhost, put an empty message to quit
 from array import array
 import socket
 import time
