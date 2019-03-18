@@ -8,17 +8,19 @@ To broadcast the typed in message to Scratch.
 ### How it works
 #### rsp-to_scratch.py
 
-```
+
 Start Scratch and right-click on the block "slider sensor value" in sensing blocks pallet to open the connection. You will see the dialog "Remote sensor connections enabled", then click OK.
 
+```
 $ python rsp-to_scratch.py
+```
 
 If the computer running scratch is remote in the LAN, enter the remote IP address. If it's the same computer, just hit [enter] or enter localhost then hit [enter].
 
 In the Scratch script, use [When I receive (hello)] to listen to the message "hello".
 
 Enter "hello" to the Python dialog to run the "hello" blocks in Scratch.
-```
+
 
 ## Basic of RSP
 When remote sensors are enabled, Scratch listens for connections on TCP port 42001. Once a connection is established, messages are sent in both directions over the socket connection according to the protocol as below.
