@@ -5,8 +5,8 @@ To broadcast the typed in message to Scratch.
  - Scratch cat can receive it with "When I receive 'message'".
  - Just click OK without message to terminate the script.
 
-### How it works
-#### rsp-to_scratch.py
+## How it works
+### rsp-to_scratch.py
 
 Start Scratch and right-click on the block "slider sensor value" in sensing blocks pallet to open the connection. You will see the dialog "Remote sensor connections enabled", then click OK.
 
