@@ -1,17 +1,24 @@
 ## Test code for Scratch Remote Sensors Protocol for Scratch 1.4
 
-To broadcast the typed in message to Scratch.
+To broadcast the typed in message to Scratch:
 
- - Scratch cat can receive it with "When I receive 'message'".
- - Just click OK without message to terminate the script.
+ - Scratch cat can receive the incoming broadcast message with "When I receive 'message'".
+ - Just click OK without message on the input dialog of talker script to terminate.
 
+To listen to the message from Scratch:
+
+ - Scratch issues a sensor-update message via socket when *actual* update of a variable happens.
+ - Scratch issues a broadcast message via socket when [broadcast (message)] block fired a message.
+ - Listner script prints messages from Scratch with byte count.
+ - Hit ctrl-c to terminate the listner script.
+ 
 ## How it works
-### rsp-to_scratch.py
+### talk_to_scratch.py
 
-Start Scratch and right-click on the block "slider sensor value" in sensing blocks pallet to open the connection. You will see the dialog "Remote sensor connections enabled", then click OK.
+Launch Scratch and right-click on the block "slider sensor value" in sensing blocks pallet to open the connection. You will see the dialog "Remote sensor connections enabled", then click OK.
 
 ```
-$ python rsp-to_scratch.py
+$ python talk_to_scratch.py
 ```
 
 If the computer running scratch is remote in the LAN, enter the remote IP address. If it's the same computer, just hit [enter] or enter localhost then hit [enter].
@@ -21,16 +28,16 @@ In the Scratch script, use [When I receive (hello)] to listen to the message "he
 Enter "hello" to the Python dialog to run the "hello" blocks in Scratch.
 
 
-### rsp-from_scratch.py
+### listen_to_scratch.py
 
 It listens to the messages from Scratch running on localhost and prints in the terminal.
 
 How to run the script and how to see the messages from Scratch:
 
 ```
-Launch SCratch first.
+Launch Scratch first.
 
-$ python rsp-from_scratch.py
+$ python listen_to_scratch.py
 
  - [broadcast (message)]
  - [set (global variable) to (VALUE)]
