@@ -21,7 +21,7 @@ In the Scratch script, use [When I receive (hello)] to listen to the message "he
 Enter "hello" to the Python dialog to run the "hello" blocks in Scratch.
 
 
-#### rsp-from_scratch.py
+### rsp-from_scratch.py
 
 It listens to the messages from Scratch running on localhost and prints in the terminal.
 
@@ -58,7 +58,7 @@ SP: space character
 
 
 
-### Remote Sensors Protocol Documents
+# Remote Sensors Protocol Documents
 
 ## Official wiki
  - https://en.scratch-wiki.info/wiki/Remote_Sensor_Connections
