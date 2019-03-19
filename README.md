@@ -51,17 +51,17 @@ When remote sensors are enabled, Scratch listens for connections on TCP port 420
 
 ### Remote Sensors Protocol Documents
 
-## Official Blog
-https://en.scratch-wiki.info/wiki/Remote_Sensor_Connections
-http://wiki.scratch.mit.edu/wiki/Remote_Sensors_Protocol
+## Official wiki
+ - https://en.scratch-wiki.info/wiki/Remote_Sensor_Connections
+ - http://wiki.scratch.mit.edu/wiki/Remote_Sensors_Protocol
 
 ## blog.champierre.com (Junya Ishihara)
 
-https://blog.champierre.com/1047
-https://blog.champierre.com/1048
-https://blog.champierre.com/1049
-https://blog.champierre.com/1050
-https://blog.champierre.com/1051
+1. https://blog.champierre.com/1047
+2. https://blog.champierre.com/1048
+3. https://blog.champierre.com/1049
+4. https://blog.champierre.com/1050
+5. https://blog.champierre.com/1051
 
 ## Scratch Remote Sensor Protocol on UDP (YOKOBOND)
 https://lab.yengawa.com/2015/12/11/scratch-remote-sensor-protocol-on-udp/
