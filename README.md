@@ -28,6 +28,8 @@ It listens to the messages from Scratch running on localhost and prints in the t
 How to run the script and how to see the messages from Scratch:
 
 ```
+Launch SCratch first.
+
 $ python rsp-from_scratch.py
 
  - [broadcast (message)]
@@ -42,13 +44,16 @@ byte count: 46   sensor-update "G1" "1234c123456789c123456789"
 byte count: 56   sensor-update "G1" "1234c123456789c123456789c123456789" 
 ```
 
-Sensor-update will be issuing only the global variable actually updated to the different value. And it needs an [wait (0.001)] block between two updates.
+Sensor-update will be issuing only when the global variable actually updated to the different value. And it needs an [wait (0) secs] block between two updates. In contrast, broadcast message is always happen if it was same as before.
 
 ## Basic of RSP
 When remote sensors are enabled, Scratch listens for connections on TCP port 42001. Once a connection is established, messages are sent in both directions over the socket connection according to the protocol as below.
 
 ```
 <size: 4 bytes><msg: size bytes>
+00 00 00 11 b r o a d c a s t SP " h e l l o "
+00 00 00 18 s e n s o r - u p d a t e SP " G 1 " SP 1 2 3 4 SP
+SP: space character
 ```
 
 
