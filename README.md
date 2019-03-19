@@ -21,7 +21,7 @@ In the Scratch script, use [When I receive (hello)] to listen to the message "he
 Enter "hello" to the Python dialog to run the "hello" blocks in Scratch.
 
 
-#### rsp-to_scratch.py
+#### rsp-from_scratch.py
 
 It listens to the messages from Scratch running on localhost and prints in the terminal.
 
@@ -30,12 +30,16 @@ How to run the script and how to see the messages from Scratch:
 ```
 $ python rsp-from_scratch.py
 
-
-- [broadcast (message)]
-        broadcast "abc"
+ - [broadcast (message)]
  - [set (global variable) to (VALUE)]
  - [change (glovbal variable) by (delta)]
-        sensor-update "G1" 13
+
+byte count: 16   broadcast "1234"
+byte count: 17   broadcast "hello"
+byte count: 24   sensor-update "G1" 1234 
+byte count: 36   sensor-update "G1" "1234c123456789" 
+byte count: 46   sensor-update "G1" "1234c123456789c123456789" 
+byte count: 56   sensor-update "G1" "1234c123456789c123456789c123456789" 
 ```
 
 Sensor-update will be issuing only the global variable actually updated to the different value. And it needs an [wait (0.001)] block between two updates.
