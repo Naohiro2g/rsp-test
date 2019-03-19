@@ -1,16 +1,17 @@
-## Test code for Scratch Remote Sensors Protocol for Scratch 1.4
+## Test code of Scratch Remote Sensors Protocol in Python2 and Scratch 1.4
 
-To broadcast the typed in message to Scratch:
+You can talk to Scratch with the message you entered:
 
  - Scratch cat can receive the incoming broadcast message with "When I receive 'message'".
  - Just click OK without message on the input dialog of talker script to terminate.
 
-To listen to the message from Scratch:
+You can listen to the message from Scratch:
 
  - Scratch issues a sensor-update message via socket when *actual* update of a variable happens.
  - Scratch issues a broadcast message via socket when [broadcast (message)] block fired a message.
  - Listner script prints messages from Scratch with byte count.
  - Hit ctrl-c to terminate the listner script.
+ - Change HOST setting in the script if you want to listen to the Scratch on remote computer.
  
 ## How it works
 ### talk_to_scratch.py
