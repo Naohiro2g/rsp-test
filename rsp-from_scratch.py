@@ -2,6 +2,8 @@
 from array import array
 import socket
 import time
+import codecs
+
 
 HOST = 'localhost'
 PORT = 42001
@@ -11,14 +13,20 @@ scratchSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 scratchSock.connect((HOST, PORT))
 print("connected! waiting for data...")
 
-
 # print incoming data forever, ctrl-c to break and quit
-
+# First four bytes is size of message in byte string format.
+# 00 00 00 11 broadcast "hello"
+# 00 00 00 18 sensor-update "G1" 1234
+data = scratchSock.recv(1024)  # ignore the first garbage
 while True:
-	time.sleep(0.01)
 	data = scratchSock.recv(1024)
 	if not data: break
+        count = int(codecs.encode(data[0:4], 'hex'), 16)
+        print ('byte count: ' + str(count) + '  '),
+        data = data[4:]
 	print(data)
+	time.sleep(0.05)
+
 
 print("closing socket...")
 scratchSock.close()
