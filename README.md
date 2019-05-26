@@ -1,4 +1,4 @@
-## Test code of Scratch Remote Sensors Protocol in Python2 and Scratch 1.4
+## Test code of Scratch Remote Sensors Protocol in Python 3 and Scratch 1.4
 
 You can talk to Scratch with messages or sensor updates.
 
