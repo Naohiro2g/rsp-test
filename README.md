@@ -12,7 +12,7 @@ You can listen to the message from Scratch:
  - Listner script prints messages from Scratch with byte count.
  - Hit ctrl-c to terminate the listner script.
  - Change HOST setting in the script if you want to listen to the Scratch on remote computer.
- 
+
 ## How it works
 ### talk_to_scratch.py
 
@@ -64,6 +64,59 @@ When remote sensors are enabled, Scratch listens for connections on TCP port 420
 SP: space character
 ```
 
+# Sample codes to broadcast a message in Scratch-RSP by offical
+
+## In Python 2
+
+ - https://en.scratch-wiki.info/wiki/Communicating_to_Scratch_via_Python_with_a_GUI
+
+```
+def sendScratchCommand(cmd):
+    n = len(cmd)
+    a = array('c')
+    a.append(chr((n >> 24) & 0xFF))
+    a.append(chr((n >> 16) & 0xFF))
+    a.append(chr((n >>  8) & 0xFF))
+    a.append(chr(n & 0xFF))
+    scratchSock.send(a.tostring() + cmd)    
+```
+
+## In Python 3
+
+ - https://en.scratch-wiki.info/wiki/Communicating_to_Scratch_via_Python
+
+In Python 3, you can make it much simpler using int.to_bytes() method like below:
+
+```
+def sendCMD(cmd):
+    sock.send(len(cmd).to_bytes(4, 'big'))
+    sock.send(bytes(cmd, 'UTF-8'))
+```
+
+### int to byte in Python 2 and Python 3
+
+ - https://www.delftstack.com/howto/python/how-to-convert-int-to-bytes-in-python-2-and-python-3/
+
+You can use struct.pack() method for both Python 2 and Python 3. Yay!
+
+```
+import struct
+
+print(len(cmd).to_bytes(4, 'big'))
+print(struct.pack(">I",len(cmd)))
+```
+
+But be careful, sock.send() method had changed...
+```
+In Python 2:
+    a = struct.pack(">I",len(cmd))
+    scratchSock.send(a.tostring())
+    scratchSock.send(cmd)           // to send str as bytes
+
+In Pythin 3:
+    sock.send(struct.pack(">I",len(cmd)))   
+    sock.send(bytes(cmd, 'UTF-8'))  // to send bytes
+```    
 
 
 # Remote Sensors Protocol Documents
