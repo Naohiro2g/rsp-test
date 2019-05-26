@@ -2,7 +2,7 @@
 
 You can talk to Scratch with messages or sensor updates.
 
- - Scratch can receive the incoming broadcast message with "When I receive 'message'".
+ - Scratch can receive the incoming broadcast message with [When I receive (message)] hat block.
  - Put an empty message to bring you into the sensor update mode.
  - Input sensor name and value. You can check the value by [(sensor name) sensor value] block." 
 
