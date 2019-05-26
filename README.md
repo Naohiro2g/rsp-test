@@ -36,10 +36,11 @@ It listens to the messages from Scratch running on localhost and prints in the t
 How to run the script and how to see the messages from Scratch:
 
 ```
-Launch Scratch first.
+Launch Scratch first then,
 
 $ python listen_to_scratch.py
 
+listening to Sctach to make:
  - [broadcast (message)]
  - [set (global variable) to (VALUE)]
  - [change (glovbal variable) by (delta)]
@@ -49,10 +50,11 @@ byte count: 17   broadcast "hello"
 byte count: 24   sensor-update "G1" 1234 
 byte count: 36   sensor-update "G1" "1234c123456789" 
 byte count: 46   sensor-update "G1" "1234c123456789c123456789" 
-byte count: 56   sensor-update "G1" "1234c123456789c123456789c123456789" 
+byte count: 56   sensor-update "G1" "1234c123456789c123456789c123456789"
+byte count: 27   broadcast "こんにちは"
 ```
 
-Sensor-update will be issuing only when the global variable actually updated to the different value. And it needs an [wait (0) secs] block between two updates. In contrast, broadcast message is always happen if it was same as before.
+Sensor-update will be issuing only when the global variable actually updated to the different value. And it needs an [wait (0) secs] block between two updates, or they will be one combined message. In contrast, broadcast message is always happen if it was same as before.
 
 ## Basic of RSP
 When remote sensors are enabled, Scratch listens for connections on TCP port 42001. Once a connection is established, messages are sent in both directions over the socket connection according to the protocol as below.
@@ -124,6 +126,9 @@ In Pythin 3:
 ## Official wiki
  - https://en.scratch-wiki.info/wiki/Remote_Sensor_Connections
  - http://wiki.scratch.mit.edu/wiki/Remote_Sensors_Protocol
+## Official sample codes
+ - https://en.scratch-wiki.info/wiki/Communicating_to_Scratch_via_Python_with_a_GUI (Python 2)
+ - https://en.scratch-wiki.info/wiki/Communicating_to_Scratch_via_Python (Python 3)
 
 ## blog.champierre.com (Junya Ishihara)
 
