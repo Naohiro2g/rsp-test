@@ -1,9 +1,10 @@
 ## Test code of Scratch Remote Sensors Protocol in Python2 and Scratch 1.4
 
-You can talk to Scratch with the message you entered:
+You can talk to Scratch with messages or sensor updates.
 
- - Scratch cat can receive the incoming broadcast message with "When I receive 'message'".
- - Just click OK without message on the input dialog of talker script to terminate.
+ - Scratch can receive the incoming broadcast message with "When I receive 'message'".
+ - Put an empty message to bring you into the sensor update mode.
+ - Input sensor name and value. You can check the value by [(sensor name) sensor value] block." 
 
 You can listen to the message from Scratch:
 
@@ -13,20 +14,32 @@ You can listen to the message from Scratch:
  - Hit ctrl-c to terminate the listner script.
  - Change HOST setting in the script if you want to listen to the Scratch on remote computer.
 
+
+## Quick start
+1. Launch Scratch and open RSP_remote_sensors_protocol.sb, click the green flag to start.
+2.
+3.
+4.
+5.
+
+
+
 ## How it works
 ### talk_to_scratch.py
 
 Launch Scratch and right-click on the block "slider sensor value" in sensing blocks pallet to open the connection. You will see the dialog "Remote sensor connections enabled", then click OK.
 
 ```
-$ python talk_to_scratch.py
+$ python3 talk_to_scratch.py
 ```
-
-If the computer running scratch is remote in the LAN, enter the remote IP address. If it's the same computer, just hit [enter] or enter localhost then hit [enter].
 
 In the Scratch script, use [When I receive (hello)] to listen to the message "hello".
 
 Enter "hello" to the Python dialog to run the "hello" blocks in Scratch.
+
+You can enter Japanse text, too. Try "こんにちは"
+
+Scratch code RSP_remote_sensors_protocol.sb is to help you understand the mechanism.
 
 
 ### listen_to_scratch.py
