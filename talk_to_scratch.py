@@ -33,9 +33,9 @@ def lenCount(text):
     return count
 
 def sensorUpdater():
-    print("Sensor name?  Try 'G1'")
+    print("Sensor name?  (Try 'G1')")
     variableName = input()
-    print("Value?   Try '1234'  You can check it by [(G1) sensor value] block.")
+    print("Value?   (Try '1234'  You can check it by [(G1) sensor value] block.)")
     variableValue = input()
     return (variableName + '" ' + variableValue)
 

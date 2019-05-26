@@ -1,4 +1,7 @@
-# Receives and prints data sent by Scratch at local; use control-C to quit
+# Python 3 Version
+# Receives and prints message sent in Scratch Remote Sensors Protocol
+# use control-c to quit
+
 from array import array
 import socket
 import time
@@ -22,9 +25,8 @@ while True:
     data = scratchSock.recv(1024)
     if not data: break
     count = int(codecs.encode(data[0:4], 'hex'), 16)
-    print ('bytes received: ' + str(count) + '  '),
-    data = data[4:] + '<EOL>'
-    print(data)
+    print ('bytes received: ' + str(count) + ' ', end="")
+    print('<message|' + data[4:].decode('utf-8') + '|EOL>')
     time.sleep(0.05)
 
 
