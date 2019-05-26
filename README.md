@@ -17,11 +17,10 @@ You can listen to the message from Scratch:
 
 ## Quick start
 1. Launch Scratch and open RSP_remote_sensors_protocol.sb, click the green flag to start.
-2.
-3.
-4.
-5.
-
+2. Open an LXTerminal window and enter ```python3 listen_to_scratch.py```
+3. Open another LXTerminal window and enter ```python3 talk_to_scratch.py```
+4. Use the green dragon to talk and the scratch cat to listen to the Remote Sensors Protocol port.
+5. Remember variables must be "For all sprites" AND sensor-update message occurs only when the value changed.
 
 
 ## How it works
@@ -51,20 +50,20 @@ How to run the script and how to see the messages from Scratch:
 ```
 Launch Scratch first then,
 
-$ python listen_to_scratch.py
+$ python3 listen_to_scratch.py
 
 listening to Sctach to make:
  - [broadcast (message)]
  - [set (global variable) to (VALUE)]
  - [change (glovbal variable) by (delta)]
 
-byte count: 16   broadcast "1234"
-byte count: 17   broadcast "hello"
-byte count: 24   sensor-update "G1" 1234 
-byte count: 36   sensor-update "G1" "1234c123456789" 
-byte count: 46   sensor-update "G1" "1234c123456789c123456789" 
-byte count: 56   sensor-update "G1" "1234c123456789c123456789c123456789"
-byte count: 27   broadcast "こんにちは"
+bytes received: 16 <message|broadcast "1234"|EOL>
+bytes received: 17 <message|broadcast "hello"|EOL>
+bytes received: 24 <message|sensor-update "G1" 1234 |EOL>
+bytes received: 36 <message|sensor-update "G1" "1234c123456789" |EOL>
+bytes received: 46 <message|sensor-update "G1" "1234c123456789c123456789" |EOL>
+bytes received: 56 <message|sensor-update "G1" "1234c123456789c123456789c123456789" |EOL>
+bytes received: 27 <message|broadcast "こんにちは"|EOL>
 ```
 
 Sensor-update will be issuing only when the global variable actually updated to the different value. And it needs an [wait (0) secs] block between two updates, or they will be one combined message. In contrast, broadcast message is always happen if it was same as before.
