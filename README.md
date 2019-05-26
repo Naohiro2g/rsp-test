@@ -1,17 +1,18 @@
-## Test code for Scratch Remote Sensors Protocol for Scratch 1.4
+## Test code of Scratch Remote Sensors Protocol in Python2 and Scratch 1.4
 
-To broadcast the typed in message to Scratch:
+You can talk to Scratch with the message you entered:
 
  - Scratch cat can receive the incoming broadcast message with "When I receive 'message'".
  - Just click OK without message on the input dialog of talker script to terminate.
 
-To listen to the message from Scratch:
+You can listen to the message from Scratch:
 
  - Scratch issues a sensor-update message via socket when *actual* update of a variable happens.
  - Scratch issues a broadcast message via socket when [broadcast (message)] block fired a message.
  - Listner script prints messages from Scratch with byte count.
  - Hit ctrl-c to terminate the listner script.
- 
+ - Change HOST setting in the script if you want to listen to the Scratch on remote computer.
+
 ## How it works
 ### talk_to_scratch.py
 
@@ -35,10 +36,11 @@ It listens to the messages from Scratch running on localhost and prints in the t
 How to run the script and how to see the messages from Scratch:
 
 ```
-Launch Scratch first.
+Launch Scratch first then,
 
 $ python listen_to_scratch.py
 
+listening to Sctach to make:
  - [broadcast (message)]
  - [set (global variable) to (VALUE)]
  - [change (glovbal variable) by (delta)]
@@ -48,10 +50,11 @@ byte count: 17   broadcast "hello"
 byte count: 24   sensor-update "G1" 1234 
 byte count: 36   sensor-update "G1" "1234c123456789" 
 byte count: 46   sensor-update "G1" "1234c123456789c123456789" 
-byte count: 56   sensor-update "G1" "1234c123456789c123456789c123456789" 
+byte count: 56   sensor-update "G1" "1234c123456789c123456789c123456789"
+byte count: 27   broadcast "こんにちは"
 ```
 
-Sensor-update will be issuing only when the global variable actually updated to the different value. And it needs an [wait (0) secs] block between two updates. In contrast, broadcast message is always happen if it was same as before.
+Sensor-update will be issuing only when the global variable actually updated to the different value. And it needs an [wait (0) secs] block between two updates, or they will be one combined message. In contrast, broadcast message is always happen if it was same as before.
 
 ## Basic of RSP
 When remote sensors are enabled, Scratch listens for connections on TCP port 42001. Once a connection is established, messages are sent in both directions over the socket connection according to the protocol as below.
@@ -63,6 +66,59 @@ When remote sensors are enabled, Scratch listens for connections on TCP port 420
 SP: space character
 ```
 
+# Sample codes to broadcast a message in Scratch-RSP by offical
+
+## In Python 2
+
+ - https://en.scratch-wiki.info/wiki/Communicating_to_Scratch_via_Python_with_a_GUI
+
+```
+def sendScratchCommand(cmd):
+    n = len(cmd)
+    a = array('c')
+    a.append(chr((n >> 24) & 0xFF))
+    a.append(chr((n >> 16) & 0xFF))
+    a.append(chr((n >>  8) & 0xFF))
+    a.append(chr(n & 0xFF))
+    scratchSock.send(a.tostring() + cmd)    
+```
+
+## In Python 3
+
+ - https://en.scratch-wiki.info/wiki/Communicating_to_Scratch_via_Python
+
+In Python 3, you can make it much simpler using int.to_bytes() method like below:
+
+```
+def sendCMD(cmd):
+    sock.send(len(cmd).to_bytes(4, 'big'))
+    sock.send(bytes(cmd, 'UTF-8'))
+```
+
+### int to byte in Python 2 and Python 3
+
+ - https://www.delftstack.com/howto/python/how-to-convert-int-to-bytes-in-python-2-and-python-3/
+
+You can use struct.pack() method for both Python 2 and Python 3. Yay!
+
+```
+import struct
+
+print(len(cmd).to_bytes(4, 'big'))
+print(struct.pack(">I",len(cmd)))
+```
+
+But be careful, sock.send() method had changed...
+```
+In Python 2:
+    a = struct.pack(">I",len(cmd))
+    scratchSock.send(a.tostring())
+    scratchSock.send(cmd)           // to send str as bytes
+
+In Pythin 3:
+    sock.send(struct.pack(">I",len(cmd)))   
+    sock.send(bytes(cmd, 'UTF-8'))  // to send bytes
+```    
 
 
 # Remote Sensors Protocol Documents
@@ -70,6 +126,9 @@ SP: space character
 ## Official wiki
  - https://en.scratch-wiki.info/wiki/Remote_Sensor_Connections
  - http://wiki.scratch.mit.edu/wiki/Remote_Sensors_Protocol
+## Official sample codes
+ - https://en.scratch-wiki.info/wiki/Communicating_to_Scratch_via_Python_with_a_GUI (Python 2)
+ - https://en.scratch-wiki.info/wiki/Communicating_to_Scratch_via_Python (Python 3)
 
 ## blog.champierre.com (Junya Ishihara)
 
@@ -79,6 +138,11 @@ SP: space character
 4. https://blog.champierre.com/1050
 5. https://blog.champierre.com/1051
 
-## Scratch Remote Sensor Protocol on UDP (YOKOBOND)
+## node module (YOKOBOND)
+scratch-rsp
+ - https://www.npmjs.com/package/scratch-rsp
+ - https://github.com/yokobond/node-scratch-rsp
+
+## Scratch Remote Sensor Protocol via UDP (YOKOBOND)
 https://lab.yengawa.com/2015/12/11/scratch-remote-sensor-protocol-on-udp/
 
