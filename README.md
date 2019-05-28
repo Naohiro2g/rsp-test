@@ -17,10 +17,11 @@ You can listen to the message from Scratch:
 
 ## Quick start
 1. Launch Scratch and open ```RSP_remote_sensors_protocol.sb```, click the green flag to start.
-2. Open an LXTerminal window and enter ```python3 listen_to_scratch.py```
-3. Open another LXTerminal window and enter ```python3 talk_to_scratch.py```
-4. Use the green dragon to talk and the scratch cat to listen to the Remote Sensors Protocol port.
+2. Open an LXTerminal window and enter ```python3 listen_to_scratch.py``` to start the listener code.
+3. Open another LXTerminal window and enter ```python3 talk_to_scratch.py``` to start the talker code.
+4. In Scratch, use the green dragon to talk and the use scratch cat to listen to the Remote Sensors Protocol port.
 5. Remember variables must be "For all sprites" AND sensor-update message occurs only when the value changed.
+6. You can use Japanese for messages and sensor/variable names.
 
 
 ## How it works
