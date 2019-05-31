@@ -4,14 +4,14 @@ You can talk to Scratch with messages or sensor updates.
 
  - Scratch can receive the incoming broadcast message with [When I receive (message)] hat block.
  - Put an empty message to bring you into the sensor update mode.
- - Input sensor name and value. You can check the value by [(sensor name) sensor value] block." 
+ - Input sensor name and value. You can check the value by [(sensor name) sensor value] block."
 
 You can listen to the message from Scratch:
 
  - Scratch issues a sensor-update message via socket when *actual* update of a variable happens.
  - Scratch issues a broadcast message via socket when [broadcast (message)] block fired a message.
- - Listner script prints messages from Scratch with byte count.
- - Hit ctrl-c to terminate the listner script.
+ - Listener script prints messages from Scratch with byte count.
+ - Hit ctrl-c to terminate the listener script.
  - Change HOST setting in the script if you want to listen to the Scratch on remote computer.
 
 
@@ -37,7 +37,7 @@ In the Scratch script, use [When I receive (hello)] to listen to the message "he
 
 Enter "hello" to the Python dialog to run the "hello" blocks in Scratch.
 
-You can enter Japanse text, too. Try "こんにちは"
+You can enter Japanese text, too. Try "こんにちは"
 
 Scratch code RSP_remote_sensors_protocol.sb is to help you understand the mechanism.
 
@@ -53,10 +53,10 @@ Launch Scratch first then,
 
 $ python3 listen_to_scratch.py
 
-listening to Sctach to make:
+listening to Scratch to make:
  - [broadcast (message)]
  - [set (global variable) to (VALUE)]
- - [change (glovbal variable) by (delta)]
+ - [change (global variable) by (delta)]
 
 bytes received: 16 <message|broadcast "1234"|EOL>
 bytes received: 17 <message|broadcast "hello"|EOL>
@@ -79,7 +79,7 @@ When remote sensors are enabled, Scratch listens for connections on TCP port 420
 SP: space character
 ```
 
-# Sample codes to broadcast a message in Scratch-RSP by offical
+# Sample codes to broadcast a message in Scratch-RSP by official
 
 ## In Python 2
 
@@ -158,4 +158,3 @@ scratch-rsp
 
 ## Scratch Remote Sensor Protocol via UDP (YOKOBOND)
 https://lab.yengawa.com/2015/12/11/scratch-remote-sensor-protocol-on-udp/
-
