@@ -1,25 +1,33 @@
-## Test code of Scratch Remote Sensors Protocol in Python 3 and Scratch 1.4
+## Test code of Scratch Remote Sensors Protocol or RSP in Python 3 / Scratch 1.4
+（[Japanese is here. 日本語はこちら。](./README-ja.md)）
 
-You can talk to Scratch with messages or sensor updates.
+### You can talk to Scratch with messages or sensor-updates with [Talker code](talk_to_scratch.py):
 
- - Scratch can receive the incoming broadcast message with [When I receive (message)] hat block.
+ 1. Input computer name (also called as hostname) or IP address of the computer to connect, which Scratch is running on. "localhost" will be set if you just hit the enter key then the code tries to connect to the same computer which the code itself is running on.
+ - When the RSP connection has successfully established, you are in the message sending mode.
+   - Input a message to talk to Scratch.
+   - Scratch can receive the incoming message with [When I receive (message)] hat block.
  - Put an empty message to bring you into the sensor update mode.
- - Input sensor name and value. You can check the value by [(sensor name) sensor value] block."
+   - Input sensor name and value. Scratch can receive the value with [(sensor name) sensor value] block.
+ - Back to the message sending mode again.
+ - Press ctrl-c to exit.
 
-You can listen to the message from Scratch:
+### You can listen to the message from Scratch with [Listener code](listen_to_scratch.py):
 
- - Scratch issues a sensor-update message via socket when *actual* update of a variable happens.
- - Scratch issues a broadcast message via socket when [broadcast (message)] block fired a message.
- - Listener script prints messages from Scratch with byte count.
+ 1. Input computer name (also called as hostname) or IP address of the computer to connect, which Scratch is running on. "localhost" will be set if you just hit the enter key.
+  - Scratch issues a sensor-update message via RSP **only when actual update of a variable happens**.
+ - Scratch issues a broadcast message via RSP when [broadcast (message)] block fired a message.
+ - Listener script prints messages from Scratch.
  - Hit ctrl-c to terminate the listener script.
  - Change HOST setting in the script if you want to listen to the Scratch on remote computer.
+ - Press ctrl-c to exit.
 
 
 ## Quick start
 1. Launch Scratch and open ```RSP_remote_sensors_protocol.sb```, click the green flag to start.
 2. Open an LXTerminal window and enter ```python3 listen_to_scratch.py``` to start the listener code.
 3. Open another LXTerminal window and enter ```python3 talk_to_scratch.py``` to start the talker code.
-4. In Scratch, use the green dragon to talk and the use scratch cat to listen to the Remote Sensors Protocol port.
+4   . In Scratch, use the green dragon to talk and the use scratch cat to listen to the Remote Sensors Protocol port.
 5. Remember variables must be "For all sprites" AND sensor-update message occurs only when the value changed.
 6. You can use Japanese for messages and sensor/variable names.
 
@@ -144,7 +152,6 @@ In Pythin 3:
  - https://en.scratch-wiki.info/wiki/Communicating_to_Scratch_via_Python (Python 3)
 
 ## blog.champierre.com (Junya Ishihara)
-
 1. https://blog.champierre.com/1047
 2. https://blog.champierre.com/1048
 3. https://blog.champierre.com/1049
@@ -157,4 +164,11 @@ scratch-rsp
  - https://github.com/yokobond/node-scratch-rsp
 
 ## Scratch Remote Sensor Protocol via UDP (YOKOBOND)
-https://lab.yengawa.com/2015/12/11/scratch-remote-sensor-protocol-on-udp/
+ - https://lab.yengawa.com/2015/12/11/scratch-remote-sensor-protocol-on-udp/
+
+## Bezelie remote control
+ - https://qiita.com/toyoda/items/bb6be6614750a8410fc9
+ - http://bezelie.com/blog/?page_id=819
+ - https://github.com/hine/pyscratch
+ - https://github.com/hine/ScratchBezelie
+ - http://hine.hatenablog.com/entry/2016/12/20/020133

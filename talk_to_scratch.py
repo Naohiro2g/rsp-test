@@ -2,40 +2,33 @@
 # Sends messages and sensor-updates in Scratch Remote Sensors Protocol
 # use control-c to quit
 
-from array import array
 import socket
-import time, sys
-import struct, unicodedata
+import sys
+import struct
 
-#HOST = 'localhost'   # his-raspi.local or 192.168.1.22
+# HOST = 'localhost'  # make it as his-raspi.local or 192.168.1.22
 #                     # to connect to another computer on the same network
 PORT = 42001          # Scratch Remote Sensors Protocol port
 
 
 print("\nScratch Remote Sensors Protocol  talker")
-HOST = input("What is the name of computer which Scratch is running on?\n \
-(hint: his-raspi.local or 192.168.22.13)\n host name?  (hit enter to make it localhost):")
-if not HOST : HOST = 'localhost'
-
+print("What is the name of computer which Scratch is running on?")
+print("(hint: his-raspi.local or 192.168.22.13)")
+HOST = input("host name?  (hit enter to make it localhost):")
+if not HOST:
+    HOST = 'localhost'
 print("\nConnecting to {}...".format(HOST))
 scratchSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 scratchSock.connect((HOST, PORT))
 print("==== Connected to Scratch at {}!".format(HOST))
 
+
 def sendScratchCommand(cmd):
-    scratchSock.send(struct.pack(">I",lenCount(cmd)))
-    print(struct.pack(">I",lenCount(cmd)))
+    scratchSock.send(struct.pack(">I", len(cmd.encode('UTF-8'))))
+    print(struct.pack(">I", len(cmd.encode('UTF-8'))))
     scratchSock.send(bytes(cmd, 'UTF-8'))
     print(bytes(cmd, 'UTF-8'))
 
-def lenCount(text):
-    count = 0
-    for c in text:
-        if unicodedata.east_asian_width(c) in 'FWA':
-            count += 3
-        else:
-            count += 1
-    return count
 
 def sensorUpdater():
     print("\n<<Sensor-update mode>>")
@@ -55,10 +48,10 @@ try:
         if not msg:
             msg = sensorUpdater()
             sendScratchCommand('sensor-update "' + msg + ' ')
-            #print('sensor-update "' + msg + ' ')
+            # print('sensor-update "' + msg + ' ')
         else:
             sendScratchCommand('broadcast "' + msg + '"')
-            #print('broadcast "' + msg + '"')
+            # print('broadcast "' + msg + '"')
 
 except KeyboardInterrupt:
     print("\n\n\n  closing socket...")
