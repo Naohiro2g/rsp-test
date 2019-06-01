@@ -1,7 +1,19 @@
 ## Scratch遠隔センサープロトコル(Remote Sensors Protocol, RSP)のPython3 / Scratch 1.4によるテストコード
 ([English version is hear. 英語版はこちら。](./README.md))
 
-### [Talkerコード](talk_to_scratch.py)で、メッセージやセンサーデータの更新をScratchに伝える（話す）ことができる：
+
+## とにかく試してみたい人（ラズパイで）
+1. Scratch 1.4を起動、サンプルプロジェクト ```RSP_remote_sensors_protocol.sb``` を開き、緑色の旗をクリックしてスタート。
+2. LTXerminalを開き、 ```python3 listen_to_scratch.py``` と入力、Listenerコードを起動。
+3. もう一つ、LTXerminalのウィンドウを開き、 ```python3 talk_to_scratch.py``` と入力、Talkerコードを起動。
+4. Scratchで、遠隔センサープロトコルのポート経由、緑のドラゴンを使って送信（話す）、Scratchネコを使って受信（聴く）。
+6. Talkerでメッセージ「hello」や「こんにちは」を送信してみる。
+7. Scratch側で、メッセージを送ったり、変数の値を変化させたりして、Listenerの表示を見る。
+5. 変数は、「全てのスプライト用」であること、センサー更新情報は変数の値が実際に変化した時だけ送信されることに注意。同じ値を連続して送信することはできない。任意のデータを確実に送るためには、本当に送りたいデータの前にダミーデータを送るなど工夫する。
+6. メッセージに日本語を使っても大丈夫。変数名／変数値、センサー名／センサー値に日本語を使うとラズパイ以外では不具合が発生、動作がとても遅くなったり、エラーメッセージが表示されたりする場合がある。
+
+
+### [Talkerコード](talk_to_scratch.py)で、メッセージやセンサー値の更新をScratchに伝える（話す）ことができる：
 
  1. Scratch 1.4 が走っているコンピューターの名前（ホスト名とも呼ばれる）を接続先として入力する。エンターキーだけ押した場合は、"localhost"が設定され、このPythonコードが走っているコンピューター自身のScratchと接続を試みる。
  - RSP接続に成功すると、メッセージ入力モードになる。
@@ -24,7 +36,7 @@
 ### マルチバイト文字について
  - UTF-8は、マルチバイト文字が2バイトから4バイトになる。古い規格だと6バイトまで。
  - 日本語はほとんどは3バイトで一部が4バイト。
- - 仮名漢字の日本語はほとんど3バイト。
+ - 仮名漢字の日本語はほとんど3バイト。絵文字は4バイトなど。
  - Talkerは、メッセージのバイト数をカウントし、メッセージの先頭に付けて送出する。
 
 ### Mac版Scratch 1.4の場合
@@ -46,49 +58,42 @@
  - 名前による指定は、ラズパイなどのLinuxコンピューター、macOS(Unix)、iPhone / iPadだけで可能。AndroidやWindowsの場合は、IPアドレスで指定する。
  - iPhone / iPadアプリのPythonista 3（無料じゃないけど）を使えば、Scratchをリモコンできる。
 
-## Quick start
-1. Launch Scratch and open ```RSP_remote_sensors_protocol.sb```, click the green flag to start.
-2. Open an LXTerminal window and enter ```python3 listen_to_scratch.py``` to start the listener code.
-3. Open another LXTerminal window and enter ```python3 talk_to_scratch.py``` to start the talker code.
-4. In Scratch, use the green dragon to talk and the use scratch cat to listen to the Remote Sensors Protocol port.
-5. Remember variables must be "For all sprites" AND sensor-update message occurs only when the value changed.
-6. You can use Japanese for messages and sensor/variable names.
 
 
-## How it works
-### talk_to_scratch.py
+## 動作の仕組みをScratchの新規プロジェクトから
+### [Talkerコード](talk_to_scratch.py)
 
-Launch Scratch and right-click on the block "slider sensor value" in sensing blocks pallet to open the connection. You will see the dialog "Remote sensor connections enabled", then click OK.
+ 1. Scratch　1.4を起動、[(スライダー)センサーの値]ブロックを右クリックして出てくるメニューで、「遠隔センサー接続を有効にする」をクリック。![遠隔センサー接続を有効にする](doc/Enable-Remote-Sensor-Connection-ja.png "サンプル")
 
+ 「遠隔センサー接続を有効にしました」というダイアログウィンドウが出た場合は、[OK]をクリック。
+ 2. ネコのスクリプトで、[(hello)を受け取ったら]というハットブロックを作り、その下に何かネコの動作を用意する。例えば、[(ニャー)という音を鳴らす]、[(ハロー)と（2）秒言う]、[(60)度回す]など。
+ 3. 以下のようにLXTernimalに打ち込んで、Talkerコードを起動。
 ```
 $ python3 talk_to_scratch.py
 ```
-
-In the Scratch script, use [When I receive (hello)] to listen to the message "hello".
-
-Enter "hello" to the Python dialog to run the "hello" blocks in Scratch.
-
-You can enter Japanse text, too. Try "こんにちは"
-
-Scratch code RSP_remote_sensors_protocol.sb is to help you understand the mechanism.
+ 4. ホスト名あるいはIPアドレスを聞いてくるので、エンターキーを押す。
+ 5. Scratchとつながったというメッセージが出るので、helloと打ち込んでエンター。
+ 6. Scratchネコが[(hello)を受け取ったら]のブロックに応じて動く。
 
 
-### listen_to_scratch.py
+### [Listenerコード](listen_to_scratch.py)
 
-It listens to the messages from Scratch running on localhost and prints in the terminal.
+ 1. Scratch側の準備はTalkerコードと同じ。
+ ```
+ $ python3 listen_to_scratch.py
+ ```
+ 2. ScratchとTalkerコードからの通信を表示することができる。
+- 両方から
+     - [(メッセージ)を送る]
+- Scratchのみ
+     - [(グローバル変数) を (値)にする]
+     - [(グローバル変数) を (変化量)ずつ変える]
+- Talkerコードのみ
+     - [(センサー名) センサーの値]
 
-How to run the script and how to see the messages from Scratch:
 
+#### 受信例
 ```
-Launch Scratch first then,
-
-$ python3 listen_to_scratch.py
-
-listening to Sctach to make:
- - [broadcast (message)]
- - [set (global variable) to (VALUE)]
- - [change (glovbal variable) by (delta)]
-
 bytes received: 16 <message|broadcast "1234"|EOL>
 bytes received: 17 <message|broadcast "hello"|EOL>
 bytes received: 24 <message|sensor-update "G1" 1234 |EOL>
@@ -98,17 +103,25 @@ bytes received: 56 <message|sensor-update "G1" "1234c123456789c123456789c1234567
 bytes received: 27 <message|broadcast "こんにちは"|EOL>
 ```
 
-Sensor-update will be issuing only when the global variable actually updated to the different value. And it needs an [wait (0) secs] block between two updates, or they will be one combined message. In contrast, broadcast message is always happen if it was same as before.
+センサー値更新はグローバル変数が違う値に変化した時のみ発行されます。また、連続した値の変化はパックされるので、フォーマットを統一したい時には[(0)秒待つ]などのブロックで分離する。
 
-## Basic of RSP
-When remote sensors are enabled, Scratch listens for connections on TCP port 42001. Once a connection is established, messages are sent in both directions over the socket connection according to the protocol as below.
+メッセージは、毎回同じでも発行されます。
+
+
+## Scratch-RSPのプロトコル
+遠隔センサー通信が有効な時、ScratchはTCP通信のポート42001で待ち受けている。ListenerやTalkerとの接続が確立されると以下のようなプロトコルで双方向通信が行われる。
 
 ```
 <size: 4 bytes><msg: size bytes>
+
 00 00 00 11 b r o a d c a s t SP " h e l l o "
 00 00 00 18 s e n s o r - u p d a t e SP " G 1 " SP 1 2 3 4 SP
+
 SP: space character
 ```
+先頭4バイト（16進数8桁、ビッグエンディアン）でメッセージの文字数。
+続いて、バイト列（バイナリー、UTF-8エンコーディング）でメッセージ本体。
+文字数には先頭4バイトを含まない。
 
 # Sample codes to broadcast a message in Scratch-RSP by offical
 
