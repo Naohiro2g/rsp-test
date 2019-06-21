@@ -25,17 +25,20 @@ print("==== Connected to Scratch at {}! I'm listening...".format(HOST))
 
 # print incoming data forever, ctrl-c to break and quit
 # First four bytes is size of message in byte string format.
-# 00 00 00 11 broadcast "hello"
-# 00 00 00 18 sensor-update "G1" 1234
+# 00 00 00 11 broadcast "hello"|
+# 00 00 00 18 sensor-update "G1" 1234 |
 
 try:
     while True:
         data = scratchSock.recv(1024)
-        if not data:
-            break
-        count = int(codecs.encode(data[0:4], 'hex'), 16)
-        print('bytes received: ' + str(count) + ' ', end="")
-        print('<message|' + data[4:].decode('utf-8') + '|EOL>')
+        if not data: break
+        i = 0
+        while bool(data[i:i+4]):    # while byte count is exist
+            count = int(codecs.encode(data[i:i+4], 'hex'), 16)
+            print ('bytes received: ' + str(count) + ' ', end="")
+            i += 4      # skip byte count
+            print('<message|' + data[i:i+count].decode('utf-8') + '|EOL>')
+            i += count  # head to the next message
         time.sleep(0.05)
 
 except KeyboardInterrupt:
