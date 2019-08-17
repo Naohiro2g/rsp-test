@@ -61,10 +61,12 @@ Launch Scratch first then,
 
 $ python3 listen_to_scratch.py
 
-listening to Scratch to make:
+listening to Scratch to receive messages like these:
  - [broadcast (message)]
  - [set (global variable) to (VALUE)]
  - [change (global variable) by (delta)]
+
+then print like these:
 
 bytes received: 16 <message|broadcast "1234"|EOL>
 bytes received: 17 <message|broadcast "hello"|EOL>
